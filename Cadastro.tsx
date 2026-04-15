@@ -1,89 +1,130 @@
-import React from "react";
-import { useState } from "react";
-import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
-import App from "./App";
- 
-type LoginProps = {
-    irParaCadastro: () => void;
+import React, { useState } from "react";
+import {
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+    TouchableOpacity
+} from 'react-native';
+
+type CadastroProps = {
+    voltarParaLogin: () => void;
 };
- 
-function Login({ irParaCadastro }: LoginProps){
+
+function Cadastro({ voltarParaLogin }: CadastroProps) {
+
+    const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [mensagem, setMensagem] = useState('');
- 
-    const entrar = () => {
-        console.log('Tentando login com:', {email,senha});
- 
-        Alert.alert('Login', 'Botão entrar clicando com sucesso!')
- 
-        setMensagem(`Bem-vindo(a)! login tentando com o email: ${email}`)
+    const [mensagemSucesso, setMensagemSucesso] = useState('');
+
+    const cadastrar = () => {
+        console.log('Dados cadastrados:', { nome, email, senha });
+        setMensagemSucesso('Cadastro realizado com sucesso!');
+        setNome('');
+        setEmail('');
+        setSenha('');
     };
- 
-    return(
-        //View é o container principal - DIV PRINCIPAL
+
+    return (
         <View style={styles.container}>
-        {/*Titulo da tela */}
-            <Text style={styles.titulo}></Text>
-            {/*TextInput é o campo onde o user digita o texto
-                Value recebe o estado atual
-                OnChangeText recebe a função para atualizar o estado */}
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-            />
-            {/* Campo de senha com secureTextEntry para esconder os caracteres*/}
-            <TextInput
-                style={styles.input}
-                placeholder="Senha"
-                value={senha}
-                onChangeText={setSenha}
-                secureTextEntry
-            />
-            <View>
-                <Button title="Entrar" onPress={entrar} />
+            <Text style={styles.titulo}>Criar Conta</Text>
+
+            <View style={styles.card}>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Nome"
+                    placeholderTextColor="#666"
+                    value={nome}
+                    onChangeText={setNome}
+                />
+
+                <TextInput
+                    style={styles.input}
+                    placeholder="Email"
+                    placeholderTextColor="#676767"
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                />
+
+                <TextInput
+                    style={styles.input}
+                    placeholder="Senha"
+                    placeholderTextColor="#666"
+                    value={senha}
+                    onChangeText={setSenha}
+                    secureTextEntry
+                />
+
+                <TouchableOpacity style={styles.botaoPrincipal} onPress={cadastrar}>
+                    <Text style={styles.textoBotao}>Cadastrar</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.botaoSecundario} onPress={voltarParaLogin}>
+                    <Text style={styles.textoBotaoSecundario}>Voltar para Login</Text>
+                </TouchableOpacity>
             </View>
-            {/*{Botão que usa prop irParaCadastro para trocar de tela} */}
-            <View style={styles.botao}>
-                <Button title="Ir para Cadastro" onPress={irParaCadastro}/>
-            </View>
-            {/*{Exibe a mensagem somente quando a tela tiver conteúdo}*/}
-            {mensagem ? <Text style={styles.mensagem}>{mensagem}</Text> :null}
-    </View>
-    )
+
+            {mensagemSucesso ? (
+                <Text style={styles.mensagem}>{mensagemSucesso}</Text>
+            ) : null}
+        </View>
+    );
 }
- 
+
 const styles = StyleSheet.create({
-    //Container principal centralizado
-    container:{
-        flex: 1,
+    container: {
+        //flex: 1,
+        backgroundColor: '#0B6623',
         justifyContent: 'center',
-        alignItems: 'center',
-        padding: 24
+        padding: 24,
     },
-    titulo:{
-        fontSize: 24,
+    titulo: {
+        fontSize: 28,
         fontWeight: 'bold',
-        marginBottom: 24
+        color: '#FFFFFF',
+        textAlign: 'center',
+        marginBottom: 24,
     },
-    input:{
-        width: '100%',
-        borderWidth: 1,
-        borderColor: '#cccccccc',
-        borderRadius: 8,
-        padding: 12,
-        marginBottom: 12
+    card: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        padding: 20,
     },
-    botao:{
-      width: '100%',
-      marginTop: 8,
+    input: {
+        backgroundColor: '#F3F4F6',
+        borderRadius: 10,
+        padding: 14,
+        marginBottom: 12,
     },
-    mensagem:{
-      
+    botaoPrincipal: {
+        backgroundColor: '#1FA34A',
+        padding: 14,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginTop: 8,
+    },
+    textoBotao: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    botaoSecundario: {
+        marginTop: 12,
+        alignItems: 'center',
+    },
+    textoBotaoSecundario: {
+        color: '#0B6623',
+        fontWeight: 'bold',
+    },
+    mensagem: {
+        marginTop: 20,
+        textAlign: 'center',
+        color: '#A7F3D0',
+        fontWeight: 'bold',
     },
 });
-export default Login;
+
+export default Cadastro;

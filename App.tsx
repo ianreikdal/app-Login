@@ -1,51 +1,53 @@
-import React from "react"; //Importar para criar componentes
+import React from "react"; // Importar para criar componentes
 import { useState } from "react"; // Importar para guardar e atualizar estados
-import { SafeAreaView, StyleSheet } from "react-native"; // Importar componentes visuais
-import Login from "./Login"; // Importar o componente Login
-import Cadastro from "./cadastro"; // Importar o componente Cadastro
-
-function App() {
-  // useState cria uma variável de estafo chamada telaAtual
-  // Ela começa um valor "login"
-  // setTelaAtual é usado para trocar o valor
-  const [telaAtual, setTelaAtual] = useState <'login' | 'cadastro'>('login');
-
+import { SafeAreaView, StyleSheet } from "react-native"; // Importa componentes visuais
+import Login from "./Login";
+import Cadastro from "./Cadastro";
+ 
+function App() { // Componente principal
+  // useState criar uma variavel de estado chamada telaAtual
+  // Ela começa com valor "login"
+  // setTelaAtual é usada para trocar o valor
+  const [telaAtual, setTelaAtual] = useState<'login' | 'cadastro'>('login');
+ 
   // Esta função muda a tela atual para "cadastro"
   const irParaCadastro = () => {
     setTelaAtual('cadastro');
   };
-  //Esta função muda a tela atual para "login"
+  // Esta função muda a tela atual para "login"
   const voltarParaLogin = () => {
-    setTelaAtual('login')
+    setTelaAtual('login');
   };
-
+ 
   return (
+    // SafeAreaView evita que o conteúdo fique embaixo de áreas do sistema.
     <SafeAreaView>
-      {
-        /* {Navegação manuel:
-        Se a telaAtual for "login", mostra a tela login.
-        Se não for, mostra a tela cadastro.
-        isso substitui o uso de bibliotecas de navegação neste exemplo.
-        } */}
-        {telaAtual === 'login' ? (
-          // Passa a função irParaCadastro como prop para o componente login
-          <Login irParaCadastro={irParaCadastro}  />
-        ) : (
-          // Passa a função VoltarParaLogin como prop para o componente cadastro
-          <Cadastro voltarParaLogin={voltarParaLogin}/>
-        )}
+      {/* {Navegação manual:
+      Se a telaAtual for "login", mostra a tela login.
+      Se não for, mostra a tela Cadastro.
+      Isso substitui o uso de bibliotecas de navegação neste exemplo.
+      } */}
+      {telaAtual === 'login' ? (
+        // Passa a função irParaCadastro como prop para o componente login
+        <Login irParaCadastro={irParaCadastro} />
+      ) : (
+        // Passa a função voltarParaLogin como prop para o componente cadastro
+        <Cadastro voltarParaLogin={voltarParaLogin} />
+      )}
     </SafeAreaView>
   );
 }
-
-//Criar os estilos do componente 
+ 
+//Criar os estilos do componente
 const styles = StyleSheet.create({
+  //Estilo principal da tela.
   container: {
-    //Faz a tela ocupar todo o espaço disponível
+    //Faz a tela ocupar todo o espaço disponivel
     flex: 1,
-    //Fundo branco
-    backgroundColor: '#fff',
+    //Fundo branco para dar visual limpo
+    backgroundColor: '#ffffff',
   }
 });
-// Exporta o componente para ser usado como entrada do projeto
+ 
+// Exporta o componente App para ser usado como entrada do projeto
 export default App;
